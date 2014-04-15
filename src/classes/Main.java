@@ -1,5 +1,12 @@
 package classes;
 
+import java.util.ArrayList;
+
+import obj.Clock;
+import obj.Customer;
+import obj.Factory;
+import obj.Store;
+
 /**
  * 
  * @author jsimonel
@@ -15,7 +22,12 @@ package classes;
  * Implement Runnable. Do NOT extend Thread.
  */
 public class Main {
-
+	private Clock				clock;
+	private Store				store;
+	private ArrayList<Signal>	signals;
+	private ArrayList<Factory>	factories;
+	private ArrayList<Customer>	customers;
+	
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 
