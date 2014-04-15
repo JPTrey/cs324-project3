@@ -22,30 +22,58 @@ import obj.Store;
  * Implement Runnable. Do NOT extend Thread.
  */
 public class Main {
-	private Clock				clock;
-	private Store				store;
-	private Signal				factoryClock,
-								factoryStore,
-								customerStore;
-	private ArrayList<Factory>	factories;
-	private ArrayList<Customer>	customers;
-	private boolean				debug = true;
-	private static boolean 		running;
-	private int					tickTime = 1000;		// tick rate (in milliseconds)
+	public final static boolean			debug = true;			// true: prints out debug statements
 	
+	private static Clock				clock;
+	private static Store				store;
+	private static Signal				factoryClock,
+										factoryStore,
+										customerStore;
+	private static ArrayList<Factory>	factories;
+	private static ArrayList<Customer>	customers;
+	private static boolean 				running;
+	private static int					tickTime = 1000,		// tick rate (in milliseconds)
+										factoryCount,
+										maxFactoryCount = 50,
+										customerCount,
+										maxCustomerCount = 100000;
 	
 	public static void main(String[] args) {
 		running = true;
-
+		factories = new ArrayList<Factory>();
+		customers = new ArrayList<Customer>();
+		factoryCount = maxFactoryCount;
+		customerCount = maxCustomerCount;
+		
+		Text.debug("Hello, debug!");
+	
 	}
 
+	// TODO: construct in seperate threads
+	public static void beginButtonAction() {
+		// construct factories
+		for (int i=0; i<factoryCount; i++) {
+			factories.add(new Factory(i+1, factoryStore));
+		}
+		
+		// construct customers
+		for (int i=0; i<factoryCount; i++) {
+			customers.add(new Customer(i+1, customerStore));
+		}
+	}
+	
+	public void setFactoryCount(int val) {
+		factoryCount += val;
+		Text.debug("factoryCount = " + factoryCount);
+	}
+	
+	public void setCustomerCount(int val) {
+		factoryCount += val;
+		Text.debug("customerCount = " + customerCount);
+	}
+	
 	public Clock getClock() {
 		return clock;
-	}
-
-
-	public void setClock(Clock clock) {
-		this.clock = clock;
 	}
 
 
@@ -53,86 +81,37 @@ public class Main {
 		return store;
 	}
 
-
-	public void setStore(Store store) {
-		this.store = store;
-	}
-
-
 	public Signal getFactoryClock() {
 		return factoryClock;
 	}
-
-
-	public void setFactoryClock(Signal factoryClock) {
-		this.factoryClock = factoryClock;
-	}
-
 
 	public Signal getFactoryStore() {
 		return factoryStore;
 	}
 
-
-	public void setFactoryStore(Signal factoryStore) {
-		this.factoryStore = factoryStore;
-	}
-
-
 	public Signal getCustomerStore() {
 		return customerStore;
 	}
-
-
-	public void setCustomerStore(Signal customerStore) {
-		this.customerStore = customerStore;
-	}
-
 
 	public ArrayList<Factory> getFactories() {
 		return factories;
 	}
 
-
-	public void setFactories(ArrayList<Factory> factories) {
-		this.factories = factories;
-	}
-
-
 	public ArrayList<Customer> getCustomers() {
 		return customers;
 	}
-
-
-	public void setCustomers(ArrayList<Customer> customers) {
-		this.customers = customers;
-	}
-
-
-	public boolean isDebug() {
-		return debug;
-	}
-
-
-	public void setDebug(boolean debug) {
-		this.debug = debug;
-	}
-
 
 	public static boolean isRunning() {
 		return running;
 	}
 
-
 	public void setRunning(boolean running) {
 		this.running = running;
 	}
 
-
 	public int getTickTime() {
 		return tickTime;
 	}
-
 
 	public void setTickTime(int tickTime) {
 		this.tickTime = tickTime;
