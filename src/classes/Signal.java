@@ -1,11 +1,6 @@
 package classes;
 
-public class Signal implements Runnable {
+public class Signal {
 
-	@Override
-	public void run() {
-		// TODO Auto-generated method stub
-		
-	}
 
 }

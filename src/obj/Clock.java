@@ -1,11 +1,30 @@
 package obj;
 
-public class Clock implements Runnable {
+import classes.Main;
 
+public class Clock implements Runnable {
+	private int			tickTime;
+	
+	public Clock(int tickTime) {
+		this.tickTime = tickTime;
+	}
+	
 	@Override
 	public void run() {
-		// TODO Auto-generated method stub
+		while (Main.isRunning()) {
+			tick();
+		}
+		
 		
 	}
 
+	private void tick() {
+		try {
+			wait(tickTime);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
 }

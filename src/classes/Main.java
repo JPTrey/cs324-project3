@@ -24,13 +24,118 @@ import obj.Store;
 public class Main {
 	private Clock				clock;
 	private Store				store;
-	private ArrayList<Signal>	signals;
+	private Signal				factoryClock,
+								factoryStore,
+								customerStore;
 	private ArrayList<Factory>	factories;
 	private ArrayList<Customer>	customers;
+	private boolean				debug = true;
+	private static boolean 		running;
+	private int					tickTime = 1000;		// tick rate (in milliseconds)
+	
 	
 	public static void main(String[] args) {
-		// TODO Auto-generated method stub
+		running = true;
 
 	}
 
+	public Clock getClock() {
+		return clock;
+	}
+
+
+	public void setClock(Clock clock) {
+		this.clock = clock;
+	}
+
+
+	public Store getStore() {
+		return store;
+	}
+
+
+	public void setStore(Store store) {
+		this.store = store;
+	}
+
+
+	public Signal getFactoryClock() {
+		return factoryClock;
+	}
+
+
+	public void setFactoryClock(Signal factoryClock) {
+		this.factoryClock = factoryClock;
+	}
+
+
+	public Signal getFactoryStore() {
+		return factoryStore;
+	}
+
+
+	public void setFactoryStore(Signal factoryStore) {
+		this.factoryStore = factoryStore;
+	}
+
+
+	public Signal getCustomerStore() {
+		return customerStore;
+	}
+
+
+	public void setCustomerStore(Signal customerStore) {
+		this.customerStore = customerStore;
+	}
+
+
+	public ArrayList<Factory> getFactories() {
+		return factories;
+	}
+
+
+	public void setFactories(ArrayList<Factory> factories) {
+		this.factories = factories;
+	}
+
+
+	public ArrayList<Customer> getCustomers() {
+		return customers;
+	}
+
+
+	public void setCustomers(ArrayList<Customer> customers) {
+		this.customers = customers;
+	}
+
+
+	public boolean isDebug() {
+		return debug;
+	}
+
+
+	public void setDebug(boolean debug) {
+		this.debug = debug;
+	}
+
+
+	public static boolean isRunning() {
+		return running;
+	}
+
+
+	public void setRunning(boolean running) {
+		this.running = running;
+	}
+
+
+	public int getTickTime() {
+		return tickTime;
+	}
+
+
+	public void setTickTime(int tickTime) {
+		this.tickTime = tickTime;
+	}
+	
 }
