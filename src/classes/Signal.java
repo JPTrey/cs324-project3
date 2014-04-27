@@ -1,5 +1,13 @@
 package classes;
-
+	
+/**
+ * 
+ * @author mlekena, JP, Nicolas Cleves
+ * 
+ * @use Clock class must simple change the current value of of EventState every specified time interval by calling the Toggle() method. Objects should wait on the same EventState. For instance 
+ * factories should all wait for a tick. Then using the clock, it will toggle Tick, factories produce, clock toggles again to Tock, and factories just wait.
+ *
+ */
 public class Signal {
 	
 	public enum EventState{TICK,TOCK};
