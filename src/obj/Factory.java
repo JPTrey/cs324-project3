@@ -19,6 +19,10 @@ public class Factory implements Runnable {
 		inventory = startingInventory;
 		inventoryCap = startingCap;
 	}
+	public int getinventory()
+	{
+		return inventory;
+	}
 
 	@Override
 	public void run() {
@@ -31,7 +35,6 @@ public class Factory implements Runnable {
 				continue;
 			}
 			inventory += 20;
-			
 		}
 	}
 
