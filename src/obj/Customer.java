@@ -1,14 +1,23 @@
 package obj;
 
-import classes.Signal;
+import classes.StoreCustomerSignal;
+
 
 public class Customer implements Runnable {
-	private Signal		customerStore;
 	
-	public Customer(int id, Signal customerStore) {
+	public enum affluency{HIGHSPENDER,MEDSPENDER,LOWSPENDER};
+	
+	private StoreCustomerSignal		customerStore;
+	private affluency buyerType;
+	
+	public Customer(int id, StoreCustomerSignal customerStore) {
 		this.customerStore = customerStore;
 	}
 	
+	public Customer(affluency enumVal)
+	{
+		
+	}
 	@Override
 	public void run() {
 		// TODO Auto-generated method stub

@@ -26,9 +26,9 @@ public class Main {
 	
 	private static Clock				clock;
 	private static Store				store;
-	private static Signal				factoryClock,
-										factoryStore,
-										customerStore;
+	private static Signal				factoryClock;
+	private static FactoryStoreSignal	factoryStore;
+	private static StoreCustomerSignal	customerStore;
 	private static ArrayList<Factory>	factories;
 	private static ArrayList<Customer>	customers;
 	private static boolean 				running;
@@ -53,7 +53,7 @@ public class Main {
 	public static void beginButtonAction() {
 		// construct factories
 		for (int i=0; i<factoryCount; i++) {
-			factories.add(new Factory(i+1, factoryStore));
+			factories.add(new Factory(i+1,factoryClock, factoryStore));
 		}
 		
 		// construct customers
@@ -85,11 +85,11 @@ public class Main {
 		return factoryClock;
 	}
 
-	public Signal getFactoryStore() {
+	public FactoryStoreSignal getFactoryStore() {
 		return factoryStore;
 	}
 
-	public Signal getCustomerStore() {
+	public StoreCustomerSignal getCustomerStore() {
 		return customerStore;
 	}
 
