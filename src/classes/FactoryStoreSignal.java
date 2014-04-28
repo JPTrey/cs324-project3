@@ -7,6 +7,7 @@ package classes;
  * @author mlekena
  *	
  *Signal class between the factory and the store
+ *keeps track of how many items there are in the warehouse. Store requests n number of item and will wait till it can get that number from the warehouse.
  */
 public class FactoryStoreSignal {
 
