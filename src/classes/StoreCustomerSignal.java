@@ -8,14 +8,11 @@ package classes;
  *
  */
 public class StoreCustomerSignal {
-	
-	public enum PriceLevel{LOWPRICE, MEDPRICE, HIGHPRICE};
-	
+	public enum PriceLevel{LOWPRICE, MIDPRICE, HIGHPRICE};
 	private PriceLevel prices;
 	
-	public StoreCustomerSignal()
-	{
-		prices = PriceLevel.MEDPRICE;
+	public StoreCustomerSignal(int price) {
+		prices = PriceLevel.MIDPRICE;
 	}
 	
 	public synchronized void announce(PriceLevel pl)
@@ -24,10 +21,8 @@ public class StoreCustomerSignal {
 		notifyAll();
 	}
 	
-	public synchronized void checkSale(PriceLevel pl)
-	{
-		while(pl != prices)
-		{
+	public synchronized void checkSale(PriceLevel pl) {
+		while(pl != prices) {
 			try {
 				wait();
 			} catch (InterruptedException e) {
@@ -35,5 +30,4 @@ public class StoreCustomerSignal {
 			}
 		}
 	}
-
 }

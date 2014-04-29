@@ -23,6 +23,7 @@ import obj.Store;
  */
 public class Main {
 	public final static boolean			debug = true;			// true: prints out debug statements
+	public final static long			waitAfterBuy = 5000;
 	
 	private static Clock				clock;
 	private static Store				store;
@@ -37,6 +38,7 @@ public class Main {
 										maxFactoryCount = 50,
 										customerCount,
 										maxCustomerCount = 100000;
+
 	
 	public static void main(String[] args) {
 		running = true;
