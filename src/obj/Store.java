@@ -1,14 +1,19 @@
 package obj;
 
-import classes.Signal;
+import classes.FactoryStoreSignal;
+import classes.StoreCustomerSignal;
 
 public class Store implements Runnable {
 	
-	private Signal signal;
-	private int shelfStock;
-	private int shelfCap;
+	public enum PriceLevel{LOWPRICE, MIDPRICE, HIGHPRICE};
 	
-	public Store
+	private FactoryStoreSignal signal;
+	private StoreCustomerSignal customerNotification;
+	private int stock;
+	public Store()
+	{
+		
+	}
 	@Override
 	public void run() {
 		// TODO Auto-generated method stub

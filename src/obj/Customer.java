@@ -1,18 +1,19 @@
 package obj;
 
 import classes.Main;
+
 import classes.StoreCustomerSignal;
-import classes.StoreCustomerSignal.PriceLevel;
+import obj.Store.PriceLevel;
 
 public class Customer implements Runnable {
 
 	public enum affluency{HIGHSPENDER,MIDSPENDER,LOWSPENDER};
 
-	private StoreCustomerSignal		customerStore;
-	private Store					store;
-	private affluency 				buyerType;
-	private PriceLevel				priceLevel;
-	private int 					buyQuantity;
+	private StoreCustomerSignal		customerStore; //contains the signal between customer and store. Use checkSale(priceLevel) to wait for sales 
+	private Store					store;			//use to buy directly from the store
+	private affluency 				buyerType;		//used to specify the buyer type 
+	private PriceLevel				priceLevel;		//specify what price Level each customer is waiting for
+	private int 					buyQuantity;	//The quantity that the customer will be each time
 
 	public Customer(int id, StoreCustomerSignal customerStore) {
 		this.customerStore = customerStore;
@@ -32,7 +33,6 @@ public Customer(affluency enumVal,int numToBuy, StoreCustomerSignal sig, Store n
 		buyQuantity = numToBuy;
 
 		switch(buyerType) {
-
 		case HIGHSPENDER: 	
 			priceLevel = priceLevel.HIGHPRICE;
 			break;

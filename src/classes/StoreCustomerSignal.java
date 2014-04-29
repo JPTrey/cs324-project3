@@ -3,12 +3,14 @@
  */
 package classes;
 
+import obj.Store.PriceLevel;
 /**
- * @author Pandora
+ * @author Modupe Theko Lekena
  *
  */
 public class StoreCustomerSignal {
-	public enum PriceLevel{LOWPRICE, MIDPRICE, HIGHPRICE};
+	
+	//ENUM moved to Store.Java
 	private PriceLevel prices;
 	
 	public StoreCustomerSignal(int price) {
