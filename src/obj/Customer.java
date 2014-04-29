@@ -53,10 +53,10 @@ public Customer(affluency enumVal,int numToBuy, StoreCustomerSignal sig, Store n
 		while (Main.isRunning()) {
 			customerStore.checkSale(priceLevel);	// if: priceLevel is not satisfactory, wait()
 			//Store.buy(byQuantity); // buy all the jeans you  want!
+			
 			try {
 				wait(Main.waitAfterBuy);
 			} catch (InterruptedException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		}
