@@ -28,14 +28,38 @@ public class Store implements Runnable {
 		return prices;
 	}
 
-	public synchronized boolean buy(int amount)
+	public synchronized boolean purchase(int amount)
 	{
+		if (stock - amount <= 0)
+		{
+			return false;
+		}
+		stock -= amount;
+		if (stock < 50)
+		{
+			prices = PriceLevel.HIGHPRICE;
+		}
+		else if (stock < 500){
+			prices = PriceLevel.MIDPRICE;
+		} else if (stock >500) {
+			prices = PriceLevel.LOWPRICE;
+		}
+		  
 		
+		return true;
 	}
+	
+	public synchronized int getStock() {
+		return stock;
+	}
+	
 	@Override
 	public void run() {
 		// TODO Auto-generated method stub
 		
 	}
+
+
+
 
 }

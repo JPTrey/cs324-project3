@@ -4,33 +4,86 @@
 package classes;
 
 import obj.Store.PriceLevel;
+import obj.Customer.Affluency;
+import obj.Store;
 /**
  * @author Modupe Theko Lekena
  *
  */
 public class StoreCustomerSignal {
-	
-	//ENUM moved to Store.Java
-	private PriceLevel prices;
-	
-	public StoreCustomerSignal(int price) {
+
+
+	//ENUM moved to Store
+	private PriceLevel 	prices;
+	private Store 		store;
+
+	public StoreCustomerSignal(Store st) {
 		prices = PriceLevel.MIDPRICE;
+		store = st;
 	}
-	
+
+	/**
+	 * Store announces when ever stock comes in and sends its current price level
+	 * @param pl
+	 */
 	public synchronized void announce(PriceLevel pl)
 	{
 		prices = pl;
 		notifyAll();
 	}
-	
-	public synchronized void checkSale(PriceLevel pl) {
-		switch 
-		while(pl != prices) {
+
+	public synchronized void checkSale(Affluency richness) {
+		int amountToBuy = 0;
+
+		//Determine the amount to buy according to the wealth of the customer and the pricelevel
+		if (prices == PriceLevel.HIGHPRICE) {
+			switch (richness)
+			{
+			case LOWSPENDER : amountToBuy = 200;
+			break;
+			case MIDSPENDER : amountToBuy = 100;
+			break;
+			case HIGHSPENDER : amountToBuy = 50;
+			break;
+			default : amountToBuy = 0;
+			break;
+			}
+		}
+		else if (prices == PriceLevel.MIDPRICE) {
+			switch (richness)
+			{
+			case LOWSPENDER : amountToBuy = 80;
+			break;
+			case MIDSPENDER : amountToBuy = 40;
+			break;
+			case HIGHSPENDER : amountToBuy = 20;
+			break;
+			default : amountToBuy = 0;
+			break;
+			}
+		}
+		else if (prices == PriceLevel.LOWPRICE) {
+			switch (richness)
+			{
+			case LOWSPENDER : amountToBuy = 40;
+			break;
+			case MIDSPENDER : amountToBuy = 20;
+			break;
+			case HIGHSPENDER : amountToBuy = 10;
+			break;
+			default : amountToBuy = 0;
+			break;
+			}
+		}
+		
+		while(store.getStock() < amountToBuy) {
 			try {
 				wait();
 			} catch (InterruptedException e) {
 				e.printStackTrace();
 			}
 		}
+		 store.purchase(amountToBuy);
+		
 	}
 }
