@@ -7,10 +7,28 @@ public class Store implements Runnable {
 	
 	public enum PriceLevel{LOWPRICE, MIDPRICE, HIGHPRICE};
 	
-	private FactoryStoreSignal signal;
+	private FactoryStoreSignal factStorsignal;
 	private StoreCustomerSignal customerNotification;
+	private PriceLevel			prices;
 	private int stock;
-	public Store()
+	
+	public Store(FactoryStoreSignal fSSig, StoreCustomerSignal sTSig)
+	{
+		factStorsignal = fSSig;
+		customerNotification = sTSig;
+		stock = 0;
+		prices = PriceLevel.HIGHPRICE;
+	}
+	 
+	
+	/**
+	 * @return the prices
+	 */
+	public PriceLevel getPrices() {
+		return prices;
+	}
+
+	public synchronized boolean buy(int amount)
 	{
 		
 	}

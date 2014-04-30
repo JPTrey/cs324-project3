@@ -24,6 +24,7 @@ public class StoreCustomerSignal {
 	}
 	
 	public synchronized void checkSale(PriceLevel pl) {
+		switch 
 		while(pl != prices) {
 			try {
 				wait();
