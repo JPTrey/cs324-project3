@@ -14,8 +14,6 @@ public class Clock implements Runnable {
 		while (Main.isRunning()) {
 			tick();
 		}
-		
-		
 	}
 
 	private void tick() {

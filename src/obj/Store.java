@@ -1,48 +1,50 @@
 package obj;
 
 import classes.FactoryStoreSignal;
+import classes.Main;
 import classes.StoreCustomerSignal;
 
 public class Store implements Runnable {
 	
 	public enum PriceLevel{LOWPRICE, MIDPRICE, HIGHPRICE};
 	
-	private FactoryStoreSignal factStorsignal;
+	private FactoryStoreSignal factStoreSignal;
 	private StoreCustomerSignal customerNotification;
-	private PriceLevel			prices;
-	private int stock;
+	private PriceLevel			currentPrice;
+	private int 				stock,
+								maxStock;
 	
 	public Store(FactoryStoreSignal fSSig, StoreCustomerSignal sTSig)
 	{
-		factStorsignal = fSSig;
+		factStoreSignal = fSSig;
 		customerNotification = sTSig;
 		stock = 0;
-		prices = PriceLevel.HIGHPRICE;
+		currentPrice = PriceLevel.HIGHPRICE;
 	}
 	 
 	
 	/**
-	 * @return the prices
+	 * @return the currentPrice
 	 */
 	public PriceLevel getPrices() {
-		return prices;
+		return currentPrice;
 	}
 
-	public synchronized boolean purchase(int amount)
-	{
-		if (stock - amount <= 0)
-		{
+	public synchronized boolean purchase(int amount) {
+		if (stock - amount <= 0) {
 			return false;
 		}
 		stock -= amount;
-		if (stock < 50)
-		{
-			prices = PriceLevel.HIGHPRICE;
+		if (stock < 50) {
+			currentPrice = PriceLevel.HIGHPRICE;
 		}
-		else if (stock < 500){
-			prices = PriceLevel.MIDPRICE;
-		} else if (stock >500) {
-			prices = PriceLevel.LOWPRICE;
+		
+		else if (stock < 500) {
+			currentPrice = PriceLevel.MIDPRICE;
+		} 
+		
+		else if (stock > 500) {
+			currentPrice = PriceLevel.LOWPRICE;
 		}
 		  
 		
@@ -53,13 +55,32 @@ public class Store implements Runnable {
 		return stock;
 	}
 	
+	private void restock() {
+		factStoreSignal.pullStock(Main.restockCount);
+	}
+	
 	@Override
 	public void run() {
-		// TODO Auto-generated method stub
-		
+		while (Main.isRunning()) {
+			
+			if (stock == 0) {
+				restock();
+			}
+			
+			// set price based on current stock
+			if ((double) stock/Main.restockCount > .67) {
+				currentPrice = PriceLevel.LOWPRICE;
+			}
+			
+			else if ((double) stock/Main.restockCount > .67) {
+				currentPrice = PriceLevel.MIDPRICE;
+			}
+			
+			else {
+				currentPrice = PriceLevel.HIGHPRICE;
+			}
+			
+			customerNotification.announce(currentPrice);
+		}
 	}
-
-
-
-
 }

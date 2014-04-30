@@ -23,7 +23,8 @@ import obj.Store;
  */
 public class Main {
 	public final static boolean			debug = true;			// true: prints out debug statements
-	public final static long			waitAfterBuy = 5000;
+	public final static long			waitAfterBuy = 5000;	// customer delay after making a purchase
+	public final static int				restockCount = 50;		// amount to restock store
 	
 	private static Clock				clock;
 	private static Store				store;
