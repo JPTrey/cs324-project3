@@ -12,14 +12,6 @@ public class Factory implements Runnable {
 	private Signal				clockSignal;		// reference to signal between this factory and Store
 	private int					 production, produced;
 
-	//	public Factory(int id, Signal proSignal, FactoryStoreSignal factorSignal ) {
-	//
-	//		this.clockSignal = proSignal;
-	//		this.factoryStore = factorSignal; 
-	//		production = 10;
-	//
-	//	}
-
 	public Factory(int id, Signal clockSignal, FactoryStoreSignal factoryStore, int setProduction) {
 
 		production = setProduction;
@@ -36,8 +28,7 @@ public class Factory implements Runnable {
 			produced += production;
 			Main.updateProduce(produced);
 			factoryStore.addStock(production);
-			//			Text.debug("EENTdfsfdsafew");
-			//			factoryStore.notifyAll();
+
 		}
 	}
 

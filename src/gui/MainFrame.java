@@ -55,6 +55,7 @@ public class MainFrame extends JFrame {
 		contentPane.add(beginButton);
 		
 		JButton endButton = new JButton("End");
+		endButton.setVisible(false);
 		contentPane.add(endButton);
 	}
 

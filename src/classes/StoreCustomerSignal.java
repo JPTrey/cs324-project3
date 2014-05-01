@@ -80,7 +80,6 @@ public class StoreCustomerSignal {
 
 		while(store.getStock() < amountToBuy) {
 			try {
-//				Text.debug("CUSTOMER::Waiting for restock");
 				wait();
 			} catch (InterruptedException e) {
 				e.printStackTrace();

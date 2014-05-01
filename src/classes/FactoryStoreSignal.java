@@ -14,6 +14,11 @@ public class FactoryStoreSignal {
 	public int warehouseInventory,
 				restockCount = 0;
 	
+	/**
+	 * Called by Factory.
+	 * @param newProducts
+	 * @return
+	 */
 	public synchronized int addStock(int newProducts)
 	{
 		warehouseInventory += newProducts;
@@ -26,6 +31,11 @@ public class FactoryStoreSignal {
 		return warehouseInventory;
 	}
 	
+	/**
+	 * Called by Store.
+	 * @param amount
+	 * @return
+	 */
 	public synchronized int pullStock(int amount)
 	{
 		while (amount < warehouseInventory)

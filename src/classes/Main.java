@@ -65,7 +65,6 @@ public class Main {
 		
 	}
 
-	// TODO: construct in separate threads
 	public static void beginButtonAction() {
 		running = true;
 		factories = new ArrayList<Factory>();

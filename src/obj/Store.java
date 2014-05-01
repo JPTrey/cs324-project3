@@ -38,26 +38,8 @@ public class Store implements Runnable {
 	 */
 	public synchronized void purchase(int amount) {
 		stock -= amount;
-
-
-
-		// check if PriceLevel changes
-//		if (((double) stock/Main.restockCount) > .67) {
-//			currentPrice = PriceLevel.LOWPRICE;
-//		}
-//
-//		else if (((double) stock/Main.restockCount) > .33) {
-//			currentPrice = PriceLevel.MIDPRICE;
-//		} 
-//
-//		else {
-//			currentPrice = PriceLevel.HIGHPRICE;
-//		}
-		
 		updatePrice();
-
 		Main.updateStock(stock);
-//		Main.updatePrice(currentPrice);
 		Text.debug("STORE::Transaction successful");
 	}
 
@@ -92,10 +74,9 @@ public class Store implements Runnable {
 		while (Main.isRunning()) {
 
 			if (stock == 0) {
+				Text.debug("STORE::Restocking...");
 				restock();
-				//				Main.updateRestock(restockCount);
-				Text.debug("STORE::We restockin'");
-				//				stock = 100;
+				Text.debug("STORE::Restocked");
 			}
 			
 			updatePrice();

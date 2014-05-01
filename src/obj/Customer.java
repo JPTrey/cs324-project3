@@ -19,10 +19,8 @@ public class Customer implements Runnable {
 	}
 
 	/**
-	 * 	
 	 * @param enumVal willing to buy at low-high price
 	 * @param sig signal between store and this customer
-	 * 
 	 */
 	public Customer(int id, Affluency enumVal, StoreCustomerSignal sig ) {
 		buyerType = enumVal;
@@ -35,18 +33,6 @@ public class Customer implements Runnable {
 		return id;
 	}
 
-	// NO-OP
-	private synchronized void attemptPurchase() {
-		Text.debug("CUSTOMER#" + id + "::Attempting purchase");
-		try {
-//			Text.debug("CUSTOMER#" + id + "::Waiting for a restock");
-			wait(Main.waitAfterBuy);
-		} catch (InterruptedException e) {
-			e.printStackTrace();
-		}
-	}
-
-	// do this until you're dead
 	@Override
 	public void run() {
 		while (Main.isRunning()) {
