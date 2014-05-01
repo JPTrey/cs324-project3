@@ -3,6 +3,7 @@ package obj;
 import classes.FactoryStoreSignal;
 import classes.Main;
 import classes.StoreCustomerSignal;
+import classes.Text;
 
 public class Store implements Runnable {
 
@@ -12,10 +13,10 @@ public class Store implements Runnable {
 	private StoreCustomerSignal customerNotification;
 	private PriceLevel			currentPrice;
 	private int 				stock,
-	maxStock;
+								restockCount,
+								maxStock;
 
-	public Store(FactoryStoreSignal fSSig, StoreCustomerSignal sTSig)
-	{
+	public Store(FactoryStoreSignal fSSig, StoreCustomerSignal sTSig) {
 		factStoreSignal = fSSig;
 		customerNotification = sTSig;
 		stock = 0;
@@ -51,14 +52,19 @@ public class Store implements Runnable {
 			currentPrice = PriceLevel.LOWPRICE;
 		}
 
+		Main.updateStock(stock);
+		Text.debug("STORE::Transaction successful");
 	}
 
 	public synchronized int getStock() {
 		return stock;
 	}
 
-	private void restock() {
-		factStoreSignal.pullStock(Main.restockCount);
+	private synchronized void restock() {
+		stock = factStoreSignal.pullStock(Main.restockCount);
+		notifyAll();
+		Main.updateRestock(restockCount);
+		Text.debug("STORE::Restocked inventory to " + stock + " items");
 	}
 
 	@Override
@@ -66,16 +72,17 @@ public class Store implements Runnable {
 		while (Main.isRunning()) {
 
 			if (stock == 0) {
-//				restock();
-				stock = 100;
+				restock();
+				Text.debug("STORE::We restockin'");
+//				stock = 100;
 			}
 
 			// set price based on current stock
-			if ((double) stock/Main.restockCount > .67) {
+			if (((double) stock/Main.restockCount) > .67) {
 				currentPrice = PriceLevel.LOWPRICE;
 			}
 
-			else if ((double) stock/Main.restockCount > .67) {
+			else if (((double) stock/Main.restockCount) > .67) {
 				currentPrice = PriceLevel.MIDPRICE;
 			}
 
@@ -84,6 +91,7 @@ public class Store implements Runnable {
 			}
 
 			customerNotification.announce(currentPrice);
+			Text.debug("STORE::Attention customers! We have " + stock + " items at " + currentPrice.toString() + " for sale!");
 		}
 	}
 }

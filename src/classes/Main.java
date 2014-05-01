@@ -1,5 +1,6 @@
 package classes;
 
+import gui.DisplayFrame;
 import gui.MainFrame;
 
 import java.awt.EventQueue;
@@ -27,7 +28,7 @@ import obj.Store;
 public class Main {
 	public final static boolean			debug = true;			// true: prints out debug statements
 	public final static long			waitAfterBuy = 5000;	// customer delay after making a purchase
-	public final static int				restockCount = 50;		// amount to restock store
+	public final static int				restockCount = 500;		// amount to restock store
 	
 	private static Clock				clock;
 	private static Store				store;
@@ -37,11 +38,15 @@ public class Main {
 	private static ArrayList<Factory>	factories;
 	private static ArrayList<Customer>	customers;
 	private static boolean 				running;
+
 	private static int					tickTime = 1000,		// tick rate (in milliseconds)
 										factoryCount,
 										maxFactoryCount = 50,
 										customerCount,
-										maxCustomerCount = 100000;
+										maxCustomerCount = 10;
+	
+	private static MainFrame				mainFrame;				// menu
+	private static DisplayFrame				displayFrame;			// statistics
 
 	
 	public static void main(String[] args) {
@@ -49,8 +54,8 @@ public class Main {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					MainFrame frame = new MainFrame();
-					frame.setVisible(true);
+					mainFrame = new MainFrame();
+					mainFrame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -66,15 +71,17 @@ public class Main {
 		customers = new ArrayList<Customer>();
 		factoryCount = maxFactoryCount;
 		customerCount = maxCustomerCount;
+		factoryClock = new Signal();
 		factoryStore = new FactoryStoreSignal();
 		
 		// construct store
+		customerStore = new StoreCustomerSignal();
 		store = new Store(factoryStore, customerStore);
-		customerStore = new StoreCustomerSignal(store);
+		customerStore.registerStore(store);
 		
 		// construct factories
 		for (int i=0; i<factoryCount; i++) {
-			factories.add(new Factory(i+1,factoryClock, factoryStore));
+			factories.add(new Factory(i+1, factoryClock, factoryStore, 10000));
 		}
 		
 		// construct customers
@@ -93,6 +100,16 @@ public class Main {
 			(new Thread(customers.get(i))).start();
 		}
 		
+		EventQueue.invokeLater(new Runnable() {
+			public void run() {
+				try {
+					displayFrame = new DisplayFrame();
+					displayFrame.setVisible(true);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		});
 	}
 	
 	public static void endButtonAction() {
@@ -152,6 +169,34 @@ public class Main {
 
 	public void setTickTime(int tickTime) {
 		this.tickTime = tickTime;
+	}
+	
+	public static int getFactoryCount() {
+		return factoryCount;
+	}
+
+	public static int getCustomerCount() {
+		return customerCount;
+	}
+
+	// updates factory view
+	public static void updateProduce(int production) {
+		displayFrame.updateItemsGenerated(production);
+	}
+	
+	// updates store view
+	public static void updateStock(int stock) {
+		displayFrame.updateItemStock(stock);
+	}
+	
+	public static void updateRestock(int restockCount) {
+		displayFrame.updateRestock(restockCount);
+	}
+
+	// updates items sold, customers served, sold per customer
+	public static void updateSold() {
+//		displayFrame.updateSold();
+		
 	}
 	
 }

@@ -14,11 +14,14 @@ public class StoreCustomerSignal {
 	private PriceLevel 	currentPrice;
 	private Store 		store;
 
-	public StoreCustomerSignal(Store st) {
+	public StoreCustomerSignal() {
 		currentPrice = PriceLevel.MIDPRICE;
-		store = st;
 	}
 
+	public void registerStore(Store store) {
+		this.store = store;
+	}
+	
 	/**
 	 * Store announces when ever stock comes in and sends its current price level
 	 * @param pl
@@ -75,11 +78,14 @@ public class StoreCustomerSignal {
 
 		while(store.getStock() < amountToBuy) {
 			try {
+//				Text.debug("CUSTOMER::Waiting for restock");
 				wait();
 			} catch (InterruptedException e) {
 				e.printStackTrace();
 			}
 		}
+		Main.updateSold();
+		Text.debug("CUSTOMER::Purchasing item");
 		store.purchase(amountToBuy);
 
 	}

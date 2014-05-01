@@ -12,6 +12,7 @@ import classes.Main;
 
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import java.awt.GridLayout;
 
 public class MainFrame extends JFrame {
 
@@ -41,20 +42,20 @@ public class MainFrame extends JFrame {
 		setBounds(100, 100, 450, 300);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
-		contentPane.setLayout(new BorderLayout(0, 0));
 		setContentPane(contentPane);
 		
-		final JButton btnNewButton = new JButton("Begin");
-		btnNewButton.addActionListener(new ActionListener() {
+		final JButton beginButton = new JButton("Begin");
+		beginButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				Main.beginButtonAction();
-				btnNewButton.setEnabled(false);
+				beginButton.setEnabled(false);
 			}
 		});
-		contentPane.add(btnNewButton, BorderLayout.WEST);
+		contentPane.setLayout(new GridLayout(0, 2, 0, 0));
+		contentPane.add(beginButton);
 		
-		JButton btnNewButton_1 = new JButton("End");
-		contentPane.add(btnNewButton_1, BorderLayout.EAST);
+		JButton endButton = new JButton("End");
+		contentPane.add(endButton);
 	}
 
 }

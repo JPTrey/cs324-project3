@@ -16,6 +16,8 @@ public class FactoryStoreSignal {
 	public synchronized int addStock(int newProducts)
 	{
 		warehouseInventory += newProducts;
+		Main.updateProduce(newProducts);
+		Text.debug("EENTdfsfdsafew");
 		notifyAll();
 		return warehouseInventory;
 	}

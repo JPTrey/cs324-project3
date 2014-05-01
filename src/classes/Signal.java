@@ -24,7 +24,7 @@ public class Signal {
 		value = EventState.TOCK;
 	}
 	
-	public void await(EventState ev)
+	public synchronized void await(EventState ev)
 	{
 		while (value != ev){
 			try {

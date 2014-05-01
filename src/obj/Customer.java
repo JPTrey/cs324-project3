@@ -1,8 +1,8 @@
 package obj;
 
 import classes.Main;
-
 import classes.StoreCustomerSignal;
+import classes.Text;
 import obj.Store.PriceLevel;
 
 public class Customer implements Runnable {
@@ -18,34 +18,40 @@ public class Customer implements Runnable {
 		this.id = id; 
 	}
 
-/**
- * 	
- * @param enumVal willing to buy at low-high price
- * @param sig signal between store and this customer
- * 
- */
-public Customer(int id, Affluency enumVal, StoreCustomerSignal sig ) {
+	/**
+	 * 	
+	 * @param enumVal willing to buy at low-high price
+	 * @param sig signal between store and this customer
+	 * 
+	 */
+	public Customer(int id, Affluency enumVal, StoreCustomerSignal sig ) {
 		buyerType = enumVal;
 		customerStore = sig;
 		this.id = id;
-		
+
 	}
 
-public int getId()
-{
-	return id;
-}
-	
+	public int getId() {
+		return id;
+	}
+
+	// NO-OP
+	private synchronized void attemptPurchase() {
+		Text.debug("CUSTOMER#" + id + "::Attempting purchase");
+		try {
+//			Text.debug("CUSTOMER#" + id + "::Waiting for a restock");
+			wait(Main.waitAfterBuy);
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
+	}
+
 	// do this until you're dead
 	@Override
 	public void run() {
 		while (Main.isRunning()) {
+			Text.debug("CUSTOMER#" + id + "::Attempting purchase");
 			customerStore.checkSale(buyerType);	// if: priceLevel is not satisfactory, wait()
-			try {
-				wait(Main.waitAfterBuy);
-			} catch (InterruptedException e) {
-				e.printStackTrace();
-			}
 		}
 	}
 }
