@@ -11,14 +11,14 @@ package classes;
  */
 public class FactoryStoreSignal {
 
-	public int warehouseInventory;
+	public int warehouseInventory,
+				restockCount = 0;
 	
 	public synchronized int addStock(int newProducts)
 	{
 		warehouseInventory += newProducts;
-		Main.updateProduce(newProducts);
-		Text.debug("EENTdfsfdsafew");
 		notifyAll();
+		Main.updateProduce(newProducts);
 		return warehouseInventory;
 	}
 	public synchronized int queryStock()
@@ -37,6 +37,7 @@ public class FactoryStoreSignal {
 			}
 		}
 		warehouseInventory -= amount;
+		Main.updateRestock(++restockCount);
 		return amount;
 	}
 }

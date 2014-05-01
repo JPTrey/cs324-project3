@@ -18,8 +18,10 @@ import java.awt.Insets;
 
 import javax.swing.JTextField;
 
+import obj.Store.PriceLevel;
 import classes.Main;
 import classes.Text;
+import java.awt.Color;
 
 public class DisplayFrame extends JFrame {
 
@@ -32,7 +34,9 @@ public class DisplayFrame extends JFrame {
 	private JTextField totalCustomersText;
 	private JTextField numCustomersText;
 	private JTextField avgItemsPurchasedText;
-	private int restock = 0;
+	private int restock;
+	private int totalItems;
+	private JTextField priceText;
 
 	/**
 	 * Launch the application.
@@ -90,6 +94,7 @@ public class DisplayFrame extends JFrame {
 		panel.add(lblNumberOfFactories, gbc_lblNumberOfFactories);
 		
 		numFactoriesText = new JTextField();
+		numFactoriesText.setEditable(false);
 		GridBagConstraints gbc_numFactoriesText = new GridBagConstraints();
 		gbc_numFactoriesText.insets = new Insets(0, 0, 5, 0);
 		gbc_numFactoriesText.fill = GridBagConstraints.HORIZONTAL;
@@ -107,6 +112,7 @@ public class DisplayFrame extends JFrame {
 		panel.add(lblItemsGenerated, gbc_lblItemsGenerated);
 		
 		JLabel lblPerFactory = new JLabel("Per Factory:");
+		lblPerFactory.setForeground(Color.LIGHT_GRAY);
 		lblPerFactory.setHorizontalAlignment(SwingConstants.RIGHT);
 		GridBagConstraints gbc_lblPerFactory = new GridBagConstraints();
 		gbc_lblPerFactory.anchor = GridBagConstraints.EAST;
@@ -116,6 +122,8 @@ public class DisplayFrame extends JFrame {
 		panel.add(lblPerFactory, gbc_lblPerFactory);
 		
 		itemsGenPerFactory = new JTextField();
+		itemsGenPerFactory.setEnabled(false);
+		itemsGenPerFactory.setEditable(false);
 		itemsGenPerFactory.setText("0");
 		GridBagConstraints gbc_itemsGenPerFactory = new GridBagConstraints();
 		gbc_itemsGenPerFactory.insets = new Insets(0, 0, 5, 0);
@@ -126,6 +134,7 @@ public class DisplayFrame extends JFrame {
 		itemsGenPerFactory.setColumns(10);
 		
 		JLabel lblTotal = new JLabel("Total:");
+		lblTotal.setForeground(Color.LIGHT_GRAY);
 		GridBagConstraints gbc_lblTotal = new GridBagConstraints();
 		gbc_lblTotal.anchor = GridBagConstraints.EAST;
 		gbc_lblTotal.insets = new Insets(0, 0, 5, 5);
@@ -134,6 +143,8 @@ public class DisplayFrame extends JFrame {
 		panel.add(lblTotal, gbc_lblTotal);
 		
 		itemsGenTotal = new JTextField();
+		itemsGenTotal.setEnabled(false);
+		itemsGenTotal.setEditable(false);
 		itemsGenTotal.setText("0");
 		GridBagConstraints gbc_itemsGenTotal = new GridBagConstraints();
 		gbc_itemsGenTotal.insets = new Insets(0, 0, 5, 0);
@@ -168,6 +179,7 @@ public class DisplayFrame extends JFrame {
 		panel_1.add(lblItemsInStock, gbc_lblItemsInStock);
 		
 		itemStockText = new JTextField();
+		itemStockText.setEditable(false);
 		itemStockText.setText("0");
 		GridBagConstraints gbc_itemStockText = new GridBagConstraints();
 		gbc_itemStockText.insets = new Insets(0, 0, 5, 0);
@@ -178,21 +190,41 @@ public class DisplayFrame extends JFrame {
 		itemStockText.setColumns(10);
 		
 		JLabel lblNewLabel = new JLabel("Times Restocked:");
+		lblNewLabel.setForeground(Color.LIGHT_GRAY);
 		GridBagConstraints gbc_lblNewLabel = new GridBagConstraints();
 		gbc_lblNewLabel.insets = new Insets(0, 0, 5, 5);
 		gbc_lblNewLabel.gridx = 0;
-		gbc_lblNewLabel.gridy = 3;
+		gbc_lblNewLabel.gridy = 2;
 		panel_1.add(lblNewLabel, gbc_lblNewLabel);
 		
 		restockText = new JTextField();
+		restockText.setEditable(false);
+		restockText.setEnabled(false);
 		restockText.setText("0");
 		GridBagConstraints gbc_restockText = new GridBagConstraints();
 		gbc_restockText.insets = new Insets(0, 0, 5, 0);
 		gbc_restockText.fill = GridBagConstraints.HORIZONTAL;
 		gbc_restockText.gridx = 1;
-		gbc_restockText.gridy = 3;
+		gbc_restockText.gridy = 2;
 		panel_1.add(restockText, gbc_restockText);
 		restockText.setColumns(10);
+		
+		JLabel priceLabel = new JLabel("Current PriceLevel:");
+		GridBagConstraints gbc_priceLabel = new GridBagConstraints();
+		gbc_priceLabel.insets = new Insets(0, 0, 5, 5);
+		gbc_priceLabel.gridx = 0;
+		gbc_priceLabel.gridy = 3;
+		panel_1.add(priceLabel, gbc_priceLabel);
+		
+		priceText = new JTextField();
+		priceText.setEditable(false);
+		GridBagConstraints gbc_priceText = new GridBagConstraints();
+		gbc_priceText.insets = new Insets(0, 0, 5, 0);
+		gbc_priceText.fill = GridBagConstraints.HORIZONTAL;
+		gbc_priceText.gridx = 1;
+		gbc_priceText.gridy = 3;
+		panel_1.add(priceText, gbc_priceText);
+		priceText.setColumns(10);
 		
 		JLabel lblCustomersServed = new JLabel("Customers Served:");
 		GridBagConstraints gbc_lblCustomersServed = new GridBagConstraints();
@@ -202,6 +234,7 @@ public class DisplayFrame extends JFrame {
 		panel_1.add(lblCustomersServed, gbc_lblCustomersServed);
 		
 		totalCustomersText = new JTextField();
+		totalCustomersText.setEditable(false);
 		totalCustomersText.setText("0");
 		GridBagConstraints gbc_totalCustomersText = new GridBagConstraints();
 		gbc_totalCustomersText.fill = GridBagConstraints.HORIZONTAL;
@@ -236,6 +269,7 @@ public class DisplayFrame extends JFrame {
 		panel_2.add(lblTotalCustomers, gbc_lblTotalCustomers);
 		
 		numCustomersText = new JTextField();
+		numCustomersText.setEditable(false);
 		GridBagConstraints gbc_numCustomersText = new GridBagConstraints();
 		gbc_numCustomersText.anchor = GridBagConstraints.WEST;
 		gbc_numCustomersText.insets = new Insets(0, 0, 5, 0);
@@ -253,6 +287,7 @@ public class DisplayFrame extends JFrame {
 		panel_2.add(lblAverageItemsPurchased, gbc_lblAverageItemsPurchased);
 		
 		avgItemsPurchasedText = new JTextField();
+		avgItemsPurchasedText.setEditable(false);
 		avgItemsPurchasedText.setText("N/A");
 		GridBagConstraints gbc_avgItemsPuchasedText = new GridBagConstraints();
 		gbc_avgItemsPuchasedText.anchor = GridBagConstraints.WEST;
@@ -260,11 +295,15 @@ public class DisplayFrame extends JFrame {
 		gbc_avgItemsPuchasedText.gridy = 3;
 		panel_2.add(avgItemsPurchasedText, gbc_avgItemsPuchasedText);
 		avgItemsPurchasedText.setColumns(10);
+		
+		totalItems = 0;
+		restock = 0;
 	}
 	
 	public void updateItemsGenerated(int items) {
 		Text.debug("Updating FactoryPanel");
-		itemsGenTotal.setText("" + items);
+//		totalItems += items;
+		itemsGenTotal.setText(Integer.toString(items));
 		itemsGenPerFactory.setText(Double.toString(items/Main.getFactoryCount()));
 	}
 	
@@ -274,18 +313,25 @@ public class DisplayFrame extends JFrame {
 	}
 
 	public void updateCustomersServed(int served) {
-		numCustomersText.setText("" + served);
-		avgItemsPurchasedText.setText(Double.toString(served/Main.getCustomerCount()));
+		totalItems += served;
+		totalCustomersText.setText(Integer.toString(served));
+		avgItemsPurchasedText.setText(Double.toString(totalItems/(double)Main.getCustomerCount()));
 	}
 
 	public void updateRestock(int restockCount) {
-		restockText.setText("" + restockCount);
+		restockText.setText(Integer.toString(restockCount));
 	}
 
+	
 	public void updateSold() {
 //		sold++;
 //		itemsSol
 		
+		
+	}
+
+	public void updatePrice(PriceLevel currentPrice) {
+		priceText.setText(currentPrice.toString());
 		
 	}
 	

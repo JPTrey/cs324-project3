@@ -10,6 +10,7 @@ import obj.Clock;
 import obj.Customer;
 import obj.Factory;
 import obj.Store;
+import obj.Store.PriceLevel;
 
 /**
  * 
@@ -43,7 +44,7 @@ public class Main {
 										factoryCount,
 										maxFactoryCount = 50,
 										customerCount,
-										maxCustomerCount = 10;
+										maxCustomerCount = 1000;
 	
 	private static MainFrame				mainFrame;				// menu
 	private static DisplayFrame				displayFrame;			// statistics
@@ -85,7 +86,7 @@ public class Main {
 		}
 		
 		// construct customers
-		for (int i=0; i<factoryCount; i++) {
+		for (int i=0; i<customerCount; i++) {
 			customers.add(new Customer(i+1, customerStore));
 		}
 			
@@ -182,6 +183,7 @@ public class Main {
 	// updates factory view
 	public static void updateProduce(int production) {
 		displayFrame.updateItemsGenerated(production);
+		Text.debug("Updating Produce");
 	}
 	
 	// updates store view
@@ -190,13 +192,28 @@ public class Main {
 	}
 	
 	public static void updateRestock(int restockCount) {
-		displayFrame.updateRestock(restockCount);
+//		displayFrame.updateRestock(restockCount);
 	}
 
 	// updates items sold, customers served, sold per customer
 	public static void updateSold() {
 //		displayFrame.updateSold();
 		
+	}
+
+	public static void updatePrice(PriceLevel currentPrice) {
+		displayFrame.updatePrice(currentPrice);
+		
+	}
+
+	public static void updateCustomer(int served) {
+		if (displayFrame != null)
+			displayFrame.updateCustomersServed(served);
+		
+	}
+	
+	public static void updateTimeUnits(int units) {
+		displayFrame.setTitle("Time Units Passed: " + units);
 	}
 	
 }

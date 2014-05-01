@@ -13,6 +13,7 @@ import obj.Store;
 public class StoreCustomerSignal {
 	private PriceLevel 	currentPrice;
 	private Store 		store;
+	private int			customerCount;
 
 	public StoreCustomerSignal() {
 		currentPrice = PriceLevel.MIDPRICE;
@@ -20,6 +21,7 @@ public class StoreCustomerSignal {
 
 	public void registerStore(Store store) {
 		this.store = store;
+		customerCount = 0;
 	}
 	
 	/**
@@ -85,6 +87,10 @@ public class StoreCustomerSignal {
 			}
 		}
 		Main.updateSold();
+		synchronized(this) {
+			customerCount++;
+		}
+		Main.updateCustomer(customerCount);
 		Text.debug("CUSTOMER::Purchasing item");
 		store.purchase(amountToBuy);
 
