@@ -1,14 +1,15 @@
 package obj;
 
+import classes.Main;
 import classes.Signal;
 import classes.Signal.EventState;
 import classes.FactoryStoreSignal;
 
 public class Factory implements Runnable {
 	
-	private FactoryStoreSignal factoryStore;
-	private Signal		productionSignal;		// reference to signal between this factory and Store
-	private int production;
+	private FactoryStoreSignal	 factoryStore;
+	private Signal				productionSignal;		// reference to signal between this factory and Store
+	private int					 production;
 	
 	public Factory(int id, Signal proSignal, FactoryStoreSignal factorSignal ) {
 		
@@ -29,7 +30,7 @@ public class Factory implements Runnable {
 	@Override
 	public void run() {
 		// TODO Auto-generated method stub
-		while (true)
+		while (Main.isRunning())
 		{
 			productionSignal.await(EventState.TICK);
 			factoryStore.addStock(production);

@@ -11,14 +11,11 @@ import obj.Store;
  *
  */
 public class StoreCustomerSignal {
-
-
-	//ENUM moved to Store
-	private PriceLevel 	prices;
+	private PriceLevel 	currentPrice;
 	private Store 		store;
 
 	public StoreCustomerSignal(Store st) {
-		prices = PriceLevel.MIDPRICE;
+		currentPrice = PriceLevel.MIDPRICE;
 		store = st;
 	}
 
@@ -28,7 +25,7 @@ public class StoreCustomerSignal {
 	 */
 	public synchronized void announce(PriceLevel pl)
 	{
-		prices = pl;
+		currentPrice = pl;
 		notifyAll();
 	}
 
@@ -36,7 +33,7 @@ public class StoreCustomerSignal {
 		int amountToBuy = 0;
 
 		//Determine the amount to buy according to the wealth of the customer and the pricelevel
-		if (prices == PriceLevel.HIGHPRICE) {
+		if (currentPrice == PriceLevel.HIGHPRICE) {
 			switch (richness)
 			{
 			case LOWSPENDER : amountToBuy = 200;
@@ -49,7 +46,7 @@ public class StoreCustomerSignal {
 			break;
 			}
 		}
-		else if (prices == PriceLevel.MIDPRICE) {
+		else if (currentPrice == PriceLevel.MIDPRICE) {
 			switch (richness)
 			{
 			case LOWSPENDER : amountToBuy = 80;
@@ -62,7 +59,7 @@ public class StoreCustomerSignal {
 			break;
 			}
 		}
-		else if (prices == PriceLevel.LOWPRICE) {
+		else if (currentPrice == PriceLevel.LOWPRICE) {
 			switch (richness)
 			{
 			case LOWSPENDER : amountToBuy = 40;
@@ -75,7 +72,7 @@ public class StoreCustomerSignal {
 			break;
 			}
 		}
-		
+
 		while(store.getStock() < amountToBuy) {
 			try {
 				wait();
@@ -83,7 +80,7 @@ public class StoreCustomerSignal {
 				e.printStackTrace();
 			}
 		}
-		 store.purchase(amountToBuy);
-		
+		store.purchase(amountToBuy);
+
 	}
 }

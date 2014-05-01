@@ -1,9 +1,11 @@
 package obj;
 
 import classes.Main;
+import classes.Signal;
 
 public class Clock implements Runnable {
 	private int			tickTime;
+	private Signal		signal;
 	
 	public Clock(int tickTime) {
 		this.tickTime = tickTime;
@@ -23,6 +25,6 @@ public class Clock implements Runnable {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		signal.toggle();
 	}
-	
 }

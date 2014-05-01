@@ -1,5 +1,8 @@
 package classes;
 
+import gui.MainFrame;
+
+import java.awt.EventQueue;
 import java.util.ArrayList;
 
 import obj.Clock;
@@ -42,18 +45,33 @@ public class Main {
 
 	
 	public static void main(String[] args) {
+		Text.debug("Hello, debug!");
+		EventQueue.invokeLater(new Runnable() {
+			public void run() {
+				try {
+					MainFrame frame = new MainFrame();
+					frame.setVisible(true);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		});
+		
+	}
+
+	// TODO: construct in separate threads
+	public static void beginButtonAction() {
 		running = true;
 		factories = new ArrayList<Factory>();
 		customers = new ArrayList<Customer>();
 		factoryCount = maxFactoryCount;
 		customerCount = maxCustomerCount;
+		factoryStore = new FactoryStoreSignal();
 		
-		Text.debug("Hello, debug!");
-	
-	}
-
-	// TODO: construct in seperate threads
-	public static void beginButtonAction() {
+		// construct store
+		store = new Store(factoryStore, customerStore);
+		customerStore = new StoreCustomerSignal(store);
+		
 		// construct factories
 		for (int i=0; i<factoryCount; i++) {
 			factories.add(new Factory(i+1,factoryClock, factoryStore));
@@ -63,6 +81,23 @@ public class Main {
 		for (int i=0; i<factoryCount; i++) {
 			customers.add(new Customer(i+1, customerStore));
 		}
+			
+		// start threads
+		for (int i=0; i<factories.size(); i++) {
+			(new Thread(factories.get(i))).start();
+		}
+		
+		(new Thread(store)).start();
+		
+		for (int i=0; i<customers.size(); i++) {
+			(new Thread(customers.get(i))).start();
+		}
+		
+	}
+	
+	public static void endButtonAction() {
+		running = false;
+		// show stats
 	}
 	
 	public void setFactoryCount(int val) {
@@ -78,7 +113,6 @@ public class Main {
 	public Clock getClock() {
 		return clock;
 	}
-
 
 	public Store getStore() {
 		return store;
