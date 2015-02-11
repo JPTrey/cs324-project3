@@ -6,13 +6,13 @@ Final/group project for CS324: Concurrent Programming.
 Responsibilities:
 
 JPS:
-	Clock
-	Store
-	GUI
-	Factory 
-	Customer
+	Clock, 
+	Store, 
+	GUI, 
+	Factory,  
+	Customer.
 Theko:
 	Signals
 Cleeves:
-	Factory
-	Customer	
+	Factory,
+	Customer.	
